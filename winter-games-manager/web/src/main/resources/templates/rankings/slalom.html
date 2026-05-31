@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Slalom Ranking')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4">
+    <h2>⛷️ <span th:text="${competition.name}"></span> – Final Ranking</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr><th>Rank</th><th>Athlete</th><th>Country</th><th>Run 1 (s)</th><th>Run 2 (s)</th><th>Total (s)</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="result,stat : ${rankings}">
+            <td th:text="${stat.index + 1}"></td>
+            <td th:text="${result.athlete.name}"></td>
+            <td th:text="${result.athlete.country}"></td>
+            <td th:text="${#numbers.formatDecimal(result.run1Time, 1, 3)}"></td>
+            <td th:text="${#numbers.formatDecimal(result.run2Time, 1, 3)}"></td>
+            <td><strong th:text="${#numbers.formatDecimal(result.totalTime, 1, 3)}"></strong></td>
+        </tr>
+        <tr th:if="${rankings.empty}"><td colspan="6" class="text-center">No finished athletes yet.</td></tr>
+        </tbody>
+    </table>
+</main>
+
+<div th:replace="fragments/layout :: footer"></div>
+</body>
+</html>

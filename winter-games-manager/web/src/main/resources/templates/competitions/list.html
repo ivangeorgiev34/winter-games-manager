@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/layout :: head('Competitions')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4">
+    <h2>Olympic Competitions</h2>
+    <div class="row">
+        <div th:each="comp : ${competitions}" class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-header" th:classappend="${comp.class.simpleName == 'SlalomCompetition'} ? 'bg-info' : 'bg-secondary'">
+                    <strong th:text="${comp.name}"></strong>
+                </div>
+                <div class="card-body">
+                    <p>Gender: <span th:text="${comp.gender}"></span></p>
+                    <p>Min age: <span th:text="${comp.minAge}"></span></p>
+                    <p>Date: <span th:text="${comp.eventDate}"></span></p>
+                    <p th:if="${comp.class.simpleName == 'SlalomCompetition'}">
+                        2 runs – top <span th:text="${comp.secondRunQualifiersCount}"></span> qualify for run2
+                    </p>
+                    <p th:if="${comp.class.simpleName == 'BiathlonCompetition'}">
+                        Laps: <span th:text="${comp.laps}"></span> | Shootings: <span th:text="${comp.shootings}"></span><br>
+                        Penalty: <span th:text="${comp.penaltySecondsPerMiss}"></span> sec/miss
+                    </p>
+                    <a th:href="@{/rankings/{id}(id=${comp.id})}" class="btn btn-primary btn-sm">View Ranking</a>
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/admin/results/slalom/{id}/run1(id=${comp.id})}" th:if="${comp.class.simpleName == 'SlalomCompetition'}" class="btn btn-warning btn-sm mt-2">Enter Results</a>
+                        <a th:href="@{/admin/results/biathlon/{id}/enter(id=${comp.id})}" th:if="${comp.class.simpleName == 'BiathlonCompetition'}" class="btn btn-warning btn-sm mt-2">Enter Results</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        <hr>
+        <a th:href="@{/admin/competitions/new/slalom}" class="btn btn-success">New Slalom Competition</a>
+        <a th:href="@{/admin/competitions/new/biathlon}" class="btn btn-success">New Biathlon Competition</a>
+    </div>
+</main>
+
+<div th:replace="fragments/layout :: footer"></div>
+</body>
+</html>

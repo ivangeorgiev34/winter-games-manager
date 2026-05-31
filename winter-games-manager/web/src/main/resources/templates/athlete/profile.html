@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('My Profile')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+<main class="container mt-4">
+    <div class="card">
+        <div class="card-header">Athlete Profile</div>
+        <div class="card-body">
+            <p><strong>Name:</strong> <span th:text="${athlete.name}"></span></p>
+            <p><strong>Country:</strong> <span th:text="${athlete.country}"></span></p>
+            <p><strong>Gender:</strong> <span th:text="${athlete.gender}"></span></p>
+            <p><strong>Date of birth:</strong> <span th:text="${athlete.dateOfBirth}"></span></p>
+        </div>
+        <div class="card-footer">
+            <a th:href="@{/athlete/profile/edit}" class="btn btn-warning">Edit</a>
+            <form th:action="@{/athlete/profile/delete}" method="post" style="display:inline;"
+                  onsubmit="return confirm('Permanently delete your account?');">
+                <button type="submit" class="btn btn-danger">Delete Account</button>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

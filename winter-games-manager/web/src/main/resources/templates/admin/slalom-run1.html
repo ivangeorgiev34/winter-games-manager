@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Slalom – Run 1')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4">
+    <h2>⛷️ <span th:text="${competition.name}"></span> – Run 1 Times</h2>
+    <form th:action="@{/admin/results/slalom/{id}/run1(id=${competition.id})}"
+          th:object="${resultList}" method="post">
+        <table class="table table-bordered">
+            <thead>
+            <tr><th>Athlete</th><th>Time (seconds)</th><th>DNF</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="athlete, iterStat : ${athletes}">
+                <td th:text="${athlete.name} + ' (' + ${athlete.country} + ')'"></td>
+                <td>
+                    <input type="number" step="0.001"
+                           th:field="*{results[__${iterStat.index}__].run1Time}"
+                           class="form-control" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                           th:field="*{results[__${iterStat.index}__].dnfRun1}" />
+                </td>
+                <input type="hidden" th:field="*{results[__${iterStat.index}__].athleteId}" />
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Save Run 1 Times</button>
+        <a th:href="@{/competitions}" class="btn btn-secondary">Cancel</a>
+    </form>
+</main>
+</body>
+</html>

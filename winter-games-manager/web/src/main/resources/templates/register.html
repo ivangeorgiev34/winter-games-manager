@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="~{common :: common-head(~{::title})}">
-    <title>Register</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Register Athlete')"></head>
 <body>
-<div th:insert="fragments/navigation :: navigation"></div>
-<div>register</div>
-<div th:replace="~{common :: common-scripts}"></div>
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">🏅 Athlete Registration</div>
+        <div class="card-body">
+            <form th:action="@{/register}" th:object="${athlete}" method="post">
+                <h5>Personal Information</h5>
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" th:field="*{name}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Country</label>
+                    <input type="text" th:field="*{country}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    <select th:field="*{gender}" class="form-select">
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" th:field="*{dateOfBirth}" class="form-control" required>
+                </div>
+
+                <hr>
+                <h5>Account Credentials</h5>
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Register</button>
+            </form>
+            <div class="mt-3 text-center">
+                <a th:href="@{/login}">Already have an account? Login</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

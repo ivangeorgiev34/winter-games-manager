@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Biathlon Results')"></head>
+<body>
+<div class="container mt-4">
+    <h2><span th:text="${competition.name}"></span> – Enter Results</h2>
+    <form th:action="@{/admin/results/biathlon/{id}/enter(id=${competition.id})}" th:object="${resultDto}" method="post">
+        <div class="mb-3">
+            <label>Athlete</label>
+            <select th:field="*{athleteId}" class="form-select" required>
+                <option th:each="athlete : ${athletes}" th:value="${athlete.id}" th:text="${athlete.name}"></option>
+            </select>
+        </div>
+        <div class="mb-3"><label>Skiing time (seconds)</label><input type="number" step="0.001" th:field="*{skiingTimeSeconds}" class="form-control" required></div>
+        <div class="mb-3"><label>Misses</label><input type="number" th:field="*{misses}" class="form-control" required></div>
+        <div class="mb-3 form-check"><input type="checkbox" th:field="*{finished}" class="form-check-input"> <label class="form-check-label">Finished (if unchecked, will be disqualified)</label></div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a th:href="@{/competitions}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>

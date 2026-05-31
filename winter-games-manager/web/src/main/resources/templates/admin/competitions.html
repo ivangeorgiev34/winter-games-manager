@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Admin – Competitions')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4">
+    <h2>Manage Competitions</h2>
+    <div class="mb-3">
+        <a th:href="@{/admin/competitions/new/slalom}" class="btn btn-success">Add Slalom</a>
+        <a th:href="@{/admin/competitions/new/biathlon}" class="btn btn-success">Add Biathlon</a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Gender</th>
+            <th>Min Age</th>
+            <th>Event Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comp : ${competitions}">
+            <td th:text="${comp.id}"></td>
+            <td th:text="${comp.name}"></td>
+            <td th:text="${comp.class.simpleName}"></td>
+            <td th:text="${comp.gender}"></td>
+            <td th:text="${comp.minAge}"></td>
+            <td th:text="${comp.eventDate}"></td>
+            <td>
+                <a th:href="@{/admin/competitions/{id}/edit(id=${comp.id})}" class="btn btn-sm btn-warning">Edit</a>
+            </td>
+        </tr>
+        <tr th:if="${competitions.isEmpty()}">
+            <td colspan="7" class="text-center">No competitions found. Create one using the buttons above.</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<div th:replace="fragments/layout :: footer"></div>
+</body>
+</html>

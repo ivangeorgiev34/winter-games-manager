@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Second Run Qualifiers')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4">
+    <h2>🎿 <span th:text="${competition.name}"></span> – Second Run Qualifiers</h2>
+    <p>Start order: slowest first from Run 1</p>
+    <table class="table table-striped">
+        <thead>
+        <tr><th>Start Order</th><th>Athlete</th><th>Country</th><th>Run 1 Time (s)</th><th>Enter Run 2</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="result, stat : ${qualifyingResults}">
+            <td th:text="${stat.index + 1}"></td>
+            <td th:text="${result.athlete.name}"></td>
+            <td th:text="${result.athlete.country}"></td>
+            <td th:text="${#numbers.formatDecimal(result.run1Time, 1, 3)}"></td>
+            <td>
+                <a th:href="@{/admin/results/slalom/{compId}/run2(compId=${competition.id}, athleteId=${result.athlete.id})}"
+                   class="btn btn-sm btn-primary">Enter Run 2</a>
+            </td>
+        </tr>
+        <tr th:if="${qualifyingResults.isEmpty()}">
+            <td colspan="5" class="text-center">No qualifiers yet. Make sure Run 1 times have been entered.</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

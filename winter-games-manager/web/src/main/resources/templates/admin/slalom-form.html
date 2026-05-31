@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Create Slalom')"></head>
+<body>
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card">
+        <div class="card-header bg-info text-white">New Slalom Competition</div>
+        <div class="card-body">
+            <form th:action="@{/admin/competitions/new/slalom}" th:object="${competition}" method="post">
+                <div class="mb-3"><label>Name</label><input th:field="*{name}" class="form-control" required></div>
+                <div class="mb-3"><label>Gender</label><select th:field="*{gender}" class="form-select"><option value="MALE">Male</option><option value="FEMALE">Female</option></select></div>
+                <div class="mb-3"><label>Minimum age</label><input type="number" th:field="*{minAge}" class="form-control" required></div>
+                <div class="mb-3"><label>Event date</label><input type="date" th:field="*{eventDate}" class="form-control" required></div>
+                <div class="mb-3"><label>Number of qualifiers for second run</label><input type="number" th:field="*{secondRunQualifiersCount}" class="form-control" required></div>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a th:href="@{/competitions}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

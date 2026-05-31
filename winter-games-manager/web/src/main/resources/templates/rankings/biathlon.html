@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Biathlon Ranking')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4">
+    <h2><span th:text="${competition.name}"></span> – Final Ranking</h2>
+
+    <p class="text-muted">Number of ranked athletes: <span th:text="${rankings != null ? rankings.size() : 'null'}"></span></p>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Rank</th>
+            <th>Athlete</th>
+            <th>Country</th>
+            <th>Skiing Time (s)</th>
+            <th>Misses</th>
+            <th>Penalty (s)</th>
+            <th>Total Time (s)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="result, stat : ${rankings}">
+            <td th:text="${stat.index + 1}">1</td>
+            <td th:text="${result.athlete != null ? result.athlete.name : 'Unknown'}">Athlete Name</td>
+            <td th:text="${result.athlete != null ? result.athlete.country : '?'}">Country</td>
+            <td th:text="${#numbers.formatDecimal(result.skiingTimeSeconds, 1, 3)}">0.000</td>
+            <td th:text="${result.misses}">0</td>
+            <td th:text="${result.misses * competition.penaltySecondsPerMiss}">0</td>
+            <td th:text="${#numbers.formatDecimal(result.totalTime, 1, 3)}">0.000</td>
+        </tr>
+        <tr th:if="${rankings == null or rankings.isEmpty()}">
+            <td colspan="7" class="text-center">No results available yet. Admins can enter results.</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<div th:replace="fragments/layout :: footer"></div>
+</body>
+</html>

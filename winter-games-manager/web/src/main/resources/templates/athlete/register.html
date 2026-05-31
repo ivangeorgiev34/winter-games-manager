@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Register for Competition')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4" style="max-width: 600px;">
+    <h2>Register for Competition</h2>
+    <form th:action="@{/athlete/register}" th:object="${registration}" method="post">
+        <div class="mb-3">
+            <label class="form-label">Select Competition</label>
+            <select th:field="*{competitionId}" class="form-select" required>
+                <option th:each="comp : ${competitions}"
+                        th:value="${comp.id}"
+                        th:text="${comp.name} + ' (' + comp.gender + ', min age ' + comp.minAge + ')'"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Register</button>
+        <a th:href="@{/athlete/profile}" class="btn btn-secondary">Cancel</a>
+    </form>
+</main>
+
+<div th:replace="fragments/layout :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Slalom – Run 2')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4" style="max-width: 600px;">
+  <h2>⛷️ Run 2 for <span th:text="${athlete.name}"></span></h2>
+  <p>Competition: <strong><span th:text="${competition.name}"></span></strong></p>
+  <p>Run 1 time: <span th:text="${#numbers.formatDecimal(result.run1Time, 1, 3)}"></span> s</p>
+
+  <form th:action="@{/admin/results/slalom/{compId}/run2(compId=${competition.id})}"
+        th:object="${resultDto}" method="post">
+    <input type="hidden" th:field="*{athleteId}" />
+    <div class="mb-3">
+      <label class="form-label">Run 2 Time (seconds)</label>
+      <input type="number" step="0.001" th:field="*{run2Time}" class="form-control" />
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" th:field="*{dnfRun2}" class="form-check-input" />
+      <label class="form-check-label">DNF (Did Not Finish)</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Run 2</button>
+    <a th:href="@{/admin/results/slalom/{compId}/qualifiers(compId=${competition.id})}" class="btn btn-secondary">Cancel</a>
+  </form>
+</main>
+
+<div th:replace="fragments/layout :: footer"></div>
+</body>
+</html>

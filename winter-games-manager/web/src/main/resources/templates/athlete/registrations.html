@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('My Registrations')"></head>
+<body>
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="container mt-4">
+    <h2>My Competition Registrations</h2>
+    <table class="table">
+        <thead><tr><th>Competition</th><th>Type</th><th>Registered on</th></tr></thead>
+        <tbody>
+        <tr th:each="reg : ${registrations}">
+            <td th:text="${reg.competition.name}"></td>
+            <td th:text="${reg.competition.class.simpleName}"></td>
+            <td th:text="${#temporals.format(reg.registrationDate, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
