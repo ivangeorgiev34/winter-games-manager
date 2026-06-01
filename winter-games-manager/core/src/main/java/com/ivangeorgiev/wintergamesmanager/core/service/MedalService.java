@@ -75,7 +75,6 @@ public class MedalService {
     }
 
     private Athlete getMedalistByAge(boolean youngest) {
-        // Gather all medal winners
         Set<Athlete> medalists = new HashSet<>();
         List<Competition> competitions = competitionRepository.findAll();
         for (Competition comp : competitions) {

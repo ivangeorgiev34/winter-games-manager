@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/", "/competitions", "/rankings/**", "/medals", "/register", "/login", "/css/**", "/webjars/**").permitAll()
                 .antMatchers("/athlete/**").hasRole("ATHLETE")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

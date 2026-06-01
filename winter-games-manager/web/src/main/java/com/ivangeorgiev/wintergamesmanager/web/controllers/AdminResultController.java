@@ -43,7 +43,6 @@ public class AdminResultController {
             SlalomResultDto dto = new SlalomResultDto();
             dto.setAthleteId(a.getId());
 
-            // Load existing result to pre‑fill times
             Optional<SlalomResult> existing = slalomResultRepository.findByCompetitionAndAthlete(comp, a);
             if (existing.isPresent()) {
                 SlalomResult res = existing.get();
@@ -116,7 +115,6 @@ public class AdminResultController {
         SlalomCompetition comp = (SlalomCompetition) competitionService.findById(compId);
         Athlete athlete = athleteService.findById(athleteId);
 
-        // Load existing result (to show Run 1 time)
         SlalomResult existingResult = slalomResultRepository.findByCompetitionAndAthlete(comp, athlete)
                 .orElseThrow(() -> new ResourceNotFoundException("No Run 1 result found for this athlete"));
 

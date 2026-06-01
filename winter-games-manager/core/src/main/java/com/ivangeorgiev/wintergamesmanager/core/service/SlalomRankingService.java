@@ -36,7 +36,6 @@ public class SlalomRankingService {
                 .sorted(Comparator.comparingDouble(SlalomResult::getRun1Time))
                 .limit(competition.getSecondRunQualifiersCount())
                 .collect(Collectors.toList());
-        // reverse order for second run (slowest first)
         finishedRun1.sort(Comparator.comparingDouble(SlalomResult::getRun1Time).reversed());
         return finishedRun1.stream().map(SlalomResult::getAthlete).collect(Collectors.toList());
     }
@@ -51,7 +50,6 @@ public class SlalomRankingService {
     }
 
     public List<SlalomResult> getQualifyingResults(SlalomCompetition competition) {
-        // Get all results for this competition that have a valid Run 1 time (non‑null, not DNF)
         List<SlalomResult> allResults = slalomResultRepository.findByCompetition(competition);
         List<SlalomResult> finishedRun1 = allResults.stream()
                 .filter(r -> !r.isDnfRun1() && r.getRun1Time() != null)
@@ -59,7 +57,6 @@ public class SlalomRankingService {
                 .limit(competition.getSecondRunQualifiersCount())
                 .collect(Collectors.toList());
 
-        // Second run starts with the slowest first (descending Run 1 time)
         finishedRun1.sort(Comparator.comparingDouble(SlalomResult::getRun1Time).reversed());
 
         return finishedRun1;

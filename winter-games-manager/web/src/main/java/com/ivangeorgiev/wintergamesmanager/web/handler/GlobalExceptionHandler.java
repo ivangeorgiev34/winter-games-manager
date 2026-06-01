@@ -5,8 +5,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.nio.file.AccessDeniedException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public String handleAccessDenied() {
+        return "error/403";
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public String handleNotFound(ResourceNotFoundException ex, Model model) {

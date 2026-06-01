@@ -13,7 +13,6 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Create admin if not exists
         try {
             userService.loadUserByUsername("admin");
         } catch (Exception e) {

@@ -23,7 +23,6 @@ public class AthleteProfileController {
     private final AthleteService athleteService;
     private final CompetitionService competitionService;
 
-    // View profile
     @GetMapping("/profile")
     public String viewProfile(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         Athlete athlete = athleteService.findByUsername(userDetails.getUsername());
@@ -31,7 +30,6 @@ public class AthleteProfileController {
         return "athlete/profile";
     }
 
-    // Edit form
     @GetMapping("/profile/edit")
     public String editProfileForm(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         Athlete athlete = athleteService.findByUsername(userDetails.getUsername());
@@ -39,7 +37,6 @@ public class AthleteProfileController {
         return "athlete/profile-edit";
     }
 
-    // Update profile
     @PostMapping("/profile/edit")
     public String updateProfile(@AuthenticationPrincipal UserDetails userDetails,
                                 @ModelAttribute Athlete updatedAthlete) {

@@ -10,7 +10,7 @@
           th:object="${resultList}" method="post">
         <table class="table table-bordered">
             <thead>
-            <tr><th>Athlete</th><th>Time (seconds)</th><th>DNF</th></tr>
+            <tr><th>Athlete</th><th>Time (seconds)</th><th>Didnt finish</th></tr>
             </thead>
             <tbody>
             <tr th:each="athlete, iterStat : ${athletes}">

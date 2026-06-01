@@ -70,7 +70,6 @@ class SlalomRankingServiceTest {
     void getSecondRunQualifiers_shouldReturnTopNAthletesByRun1TimeExcludingDNF_inReverseOrder() {
         when(slalomResultRepository.findByCompetition(competition)).thenReturn(Arrays.asList(result1, result2, result3));
         List<Athlete> qualifiers = slalomRankingService.getSecondRunQualifiers(competition);
-        // Expected: top 2 by run1 time (not DNF) are athlete2 (90), athlete1 (100) -> then reversed -> athlete1 first, athlete2 second
         assertThat(qualifiers).hasSize(2);
         assertThat(qualifiers.get(0).getId()).isEqualTo(1L); // slower first
         assertThat(qualifiers.get(1).getId()).isEqualTo(2L);
