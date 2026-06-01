@@ -4,12 +4,16 @@ import com.ivangeorgiev.wintergamesmanager.core.dto.CompetitionRegistrationDto;
 import com.ivangeorgiev.wintergamesmanager.core.service.AthleteService;
 import com.ivangeorgiev.wintergamesmanager.core.service.CompetitionService;
 import com.ivangeorgiev.wintergamesmanager.data.models.Athlete;
+import com.ivangeorgiev.wintergamesmanager.data.models.Competition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/athlete")
@@ -58,8 +62,13 @@ public class AthleteProfileController {
 
     // Show competition registration form
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("competitions", competitionService.findAll());
+    public String showRegistrationForm(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        Athlete athlete = athleteService.findByUsername(userDetails.getUsername());
+        List<Competition> competitions = competitionService.findAll().stream()
+                .filter(a -> a.getGender() == athlete.getGender())
+                .collect(Collectors.toList());
+
+        model.addAttribute("competitions", competitions);
         model.addAttribute("registration", new CompetitionRegistrationDto());
         return "athlete/register";
     }

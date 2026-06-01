@@ -12,7 +12,7 @@
             <select th:field="*{competitionId}" class="form-select" required>
                 <option th:each="comp : ${competitions}"
                         th:value="${comp.id}"
-                        th:text="${comp.name} + ' (' + comp.gender + ', min age ' + comp.minAge + ')'"></option>
+                        th:text="${comp.name} + ' (' + ${comp.gender} + ', min age ' + ${comp.minAge} + ')'"></option>
             </select>
         </div>
         <button type="submit" class="btn btn-success">Register</button>

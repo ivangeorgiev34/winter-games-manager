@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 public class MedalService {
 
     private final CompetitionRepository competitionRepository;
-    private final SlalomResultRepository slalomResultRepository;
-    private final BiathlonResultRepository biathlonResultRepository;
     private final SlalomRankingService slalomRankingService;
     private final BiathlonRankingService biathlonRankingService;
     private final AthleteRepository athleteRepository;
